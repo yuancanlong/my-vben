@@ -46,7 +46,7 @@ const page: AppRouteModule = {
         {
           path: 'stepmodal',
           name: 'FormStepModalPage',
-          component: () => import('@/views/demo/page/form/modalStep/index.vue'),
+          component: () => import('@/views/demo/page/form/modal-step/index.vue'),
           meta: {
             title: '弹框分走模块',
           },

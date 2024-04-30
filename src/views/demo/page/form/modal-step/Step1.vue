@@ -4,11 +4,11 @@
       <BasicForm @register="register">
         <template #fac="{ model, field }">
           <Input.Group compact>
-            <Select v-model:value="model['pay']" class="pay-select">
+            <Select v-model:value="model['pay']" class="pay-select" style="width: 30%">
               <Select.Option value="zfb"> 支付宝 </Select.Option>
               <Select.Option value="yl"> 银联 </Select.Option>
             </Select>
-            <a-input class="pay-input" v-model:value="model[field]" />
+            <a-input class="pay-input" v-model:value="model[field]" style="width: 70%" />
           </Input.Group>
         </template>
       </BasicForm>

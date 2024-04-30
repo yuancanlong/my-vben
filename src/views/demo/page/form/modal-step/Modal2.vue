@@ -3,7 +3,7 @@
     @register="register"
     title="Modal Title"
     :helpMessage="['提示1', '提示2']"
-    destroyOnClose
+    width="960px"
   >
     <a-button type="primary" @click="closeModal" class="mr-2"> 从内部关闭弹窗 </a-button>
     <a-button type="primary" @click="setModalProps({ title: 'Modal New Title' })">
