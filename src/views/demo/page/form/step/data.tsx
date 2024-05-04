@@ -3,18 +3,19 @@ import { FormSchema } from '@/components/Form';
 export const step1Schemas: FormSchema[] = [
   {
     field: 'account',
-    component: 'Select',
+    // component: 'Select',
     label: '付款账户',
     required: true,
-    defaultValue: '1',
-    componentProps: {
-      options: [
-        {
-          label: 'anncwb@126.com',
-          value: '1',
-        },
-      ],
-    },
+    slot: 'account',
+    // defaultValue: '1',
+    // componentProps: {
+    //   options: [
+    //     {
+    //       label: 'anncwb@126.com',
+    //       value: '1',
+    //     },
+    //   ],
+    // },
     colProps: {
       span: 24,
     },

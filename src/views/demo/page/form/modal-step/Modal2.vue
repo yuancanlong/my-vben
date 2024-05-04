@@ -5,28 +5,29 @@
     :helpMessage="['提示1', '提示2']"
     width="960px"
   >
-    <a-button type="primary" @click="closeModal" class="mr-2"> 从内部关闭弹窗 </a-button>
+    <!-- <a-button type="primary" @click="closeModal" class="mr-2"> 从内部关闭弹窗 </a-button>
     <a-button type="primary" @click="setModalProps({ title: 'Modal New Title' })">
       从内部修改title
-    </a-button>
-    <Divider />
+    </a-button> -->
 
-    <div class="step-form-form">
-      <Steps :current="current">
-        <Steps.Step title="填写转账信息" />
-        <Steps.Step title="确认转账信息" />
-        <Steps.Step title="完成" />
-      </Steps>
-    </div>
-    <div class="mt-5">
-      <Step1 @next="handleStep1Next" v-show="current === 0" />
-      <Step2
-        @prev="handleStepPrev"
-        @next="handleStep2Next"
-        v-show="current === 1"
-        v-if="state.initStep2"
-      />
-      <Step3 v-show="current === 2" @redo="handleRedo" v-if="state.initStep3" />
+    <div class="pl4 pr4">
+      <div class="step-form-form">
+        <Steps :current="current">
+          <Steps.Step title="下载文件" />
+          <Steps.Step title="导入文件" />
+          <Steps.Step title="导入完成" />
+        </Steps>
+      </div>
+      <div class="mt-5">
+        <Step1 @next="handleStep1Next" v-show="current === 0" />
+        <Step2
+          @prev="handleStepPrev"
+          @next="handleStep2Next"
+          v-show="current === 1"
+          v-if="state.initStep2"
+        />
+        <Step3 v-show="current === 2" @redo="handleRedo" v-if="state.initStep3" />
+      </div>
     </div>
   </BasicModal>
 </template>
