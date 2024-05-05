@@ -112,6 +112,9 @@ interface _CustomComponents {
     (typeof import('@/components/StrengthMeter/src/StrengthMeter.vue'))['default']
   >;
   Upload: ExtractPropTypes<(typeof import('@/components/Upload/src/BasicUpload.vue'))['default']>;
+  UploadDragger: ExtractPropTypes<
+    (typeof import('@/components/UploadDragger/src/UploadDragger.vue'))['default']
+  >;
   ImageUpload: ExtractPropTypes<
     (typeof import('@/components/Upload/src/components/ImageUpload.vue'))['default']
   >;
@@ -163,6 +166,7 @@ export interface ComponentProps {
   Switch: ExtractPropTypes<(typeof import('ant-design-vue/es/switch'))['default']>;
   StrengthMeter: CustomComponents['StrengthMeter'] & ComponentProps['InputPassword'];
   Upload: CustomComponents['Upload'];
+  UploadDragger: CustomComponents['UploadDragger'];
   ImageUpload: CustomComponents['ImageUpload'];
   IconPicker: CustomComponents['IconPicker'];
   Render: Record<string, any>;

@@ -1,26 +1,17 @@
 <template>
-  <div class="w-120 m-auto">
-    <Alert message="确认转账后，资金将直接打入对方账户，无法退回。" show-icon />
-    <Descriptions :column="1" class="mt-5">
-      <Descriptions.Item label="付款账户"> ant-design@alipay.com </Descriptions.Item>
-      <Descriptions.Item label="收款账户"> test@example.com </Descriptions.Item>
-      <Descriptions.Item label="收款人姓名"> Vben </Descriptions.Item>
-      <Descriptions.Item label="转账金额"> 500元 </Descriptions.Item>
-    </Descriptions>
-    <Divider />
+  <div class="m-auto">
     <BasicForm @register="register" />
   </div>
 </template>
 <script lang="ts" setup>
   import { BasicForm, useForm } from '@/components/Form';
-  import { step2Schemas } from './data';
-  import { Alert, Divider, Descriptions } from 'ant-design-vue';
+  import { step3Schemas } from './data';
 
   const emit = defineEmits(['next', 'prev']);
 
-  const [register, { validate, setProps }] = useForm({
+  const [register, { getFieldsValue: getFieldsValueCustom, setProps }] = useForm({
     labelWidth: 80,
-    schemas: step2Schemas,
+    schemas: step3Schemas,
     actionColOptions: {
       span: 14,
     },
@@ -40,7 +31,6 @@
 
   async function customSubmitFunc() {
     try {
-      const values = await validate();
       setProps({
         submitButtonOptions: {
           loading: true,
@@ -52,7 +42,7 @@
             loading: false,
           },
         });
-        emit('next', values);
+        emit('next', getFieldsValueCustom());
       }, 1500);
     } catch (error) {
       console.error(error);

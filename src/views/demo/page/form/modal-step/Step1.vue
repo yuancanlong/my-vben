@@ -1,46 +1,28 @@
 <template>
   <div class="step1">
-    <div class="step1-form"> </div>
+    <div class="step1-form">
+      <Button type="default" class="mt-16px">下载导入模板</Button>
+      <Button type="link" class="mt-32px mb-8px">下载商品资料</Button>
+    </div>
 
     <p class="mb-0px text-center">
       可先下载商品资料查阅可授权的数据，再下载模板文件，整理编辑模板文件后导入模板进行批量订阅。
     </p>
+
+    <Button type="primary" class="mt-32px" @click="emit('next')">下一步</Button>
   </div>
 </template>
 <script lang="ts" setup>
-  import { BasicForm, useForm } from '@/components/Form';
-  // import { Button } from '@/components/Button';
-  import { step1Schemas } from './data';
+  import { Button } from 'ant-design-vue';
 
   const emit = defineEmits(['next']);
-
-  const [register, { validate }] = useForm({
-    labelWidth: 100,
-    schemas: step1Schemas,
-    actionColOptions: {
-      span: 14,
-    },
-    showResetButton: false,
-    submitButtonOptions: {
-      text: '下一步',
-    },
-    submitFunc: customSubmitFunc,
-  });
-
-  async function customSubmitFunc() {
-    try {
-      const values = await validate();
-      emit('next', values);
-    } catch (error) {
-      //
-    }
-  }
 </script>
 <style lang="less" scoped>
   .step1 {
+    text-align: center;
+
     &-form {
-      width: 450px;
-      margin: 0 auto;
+      display: inline-grid;
     }
   }
 </style>
