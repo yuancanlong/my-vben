@@ -1,15 +1,13 @@
 <template>
   <BasicModal
+    v-bind="$attrs"
     @register="register"
     title="Modal Title"
     :helpMessage="['提示1', '提示2']"
     width="960px"
+    :destroyOnClose="true"
+    @cancel="handleRedo"
   >
-    <!-- <a-button type="primary" @click="closeModal" class="mr-2"> 从内部关闭弹窗 </a-button>
-    <a-button type="primary" @click="setModalProps({ title: 'Modal New Title' })">
-      从内部修改title
-    </a-button> -->
-
     <div class="pl4 pr4">
       <div class="step-form-form">
         <Steps :current="current">
@@ -26,7 +24,12 @@
           v-show="current === 1"
           v-if="state.initStep2"
         />
-        <Step3 v-show="current === 2" @redo="handleRedo" v-if="state.initStep3" />
+        <Step3
+          v-show="current === 2"
+          :resultData="resultData"
+          @prev="handleStepPrev"
+          v-if="state.initStep3"
+        />
       </div>
     </div>
   </BasicModal>
@@ -39,9 +42,15 @@
   import Step3 from './Step3.vue';
   import { Steps } from 'ant-design-vue';
 
-  const [register, { closeModal, setModalProps }] = useModalInner();
+  const [register] = useModalInner();
 
   const current = ref(0);
+
+  let resultData = reactive({
+    status: 'success',
+    subTitle: '',
+    link: 'asd',
+  });
 
   const state = reactive({
     initStep2: false,
@@ -50,7 +59,6 @@
   function handleStep1Next(step1Values: any) {
     current.value++;
     state.initStep2 = true;
-    console.log(step1Values);
   }
 
   function handleStepPrev() {
@@ -60,7 +68,8 @@
   function handleStep2Next(step2Values: any) {
     current.value++;
     state.initStep3 = true;
-    console.log(step2Values);
+    resultData.link = step2Values.asd;
+    console.log(resultData, 'resultData.value');
   }
 
   function handleRedo() {
