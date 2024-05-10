@@ -26,9 +26,9 @@
         />
         <Step3
           v-show="current === 2"
+          :subTitle="subTitle"
           :resultData="resultData"
           @prev="handleStepPrev"
-          v-if="state.initStep3"
         />
       </div>
     </div>
@@ -45,10 +45,11 @@
   const [register] = useModalInner();
 
   const current = ref(0);
+  const subTitle = ref('asd');
 
   let resultData = reactive({
     status: 'success',
-    subTitle: '',
+    subTitle: '222',
     link: 'asd',
   });
 
@@ -69,7 +70,6 @@
     current.value++;
     state.initStep3 = true;
     resultData.link = step2Values.asd;
-    console.log(resultData, 'resultData.value');
   }
 
   function handleRedo() {

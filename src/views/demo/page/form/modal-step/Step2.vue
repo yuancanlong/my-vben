@@ -26,13 +26,13 @@
             return new Promise((resolve) => {
               // todo
               submit();
-              uploadApi(file, progress).then((uploadApiResponse) => {
-                resolve({
-                  code: 200,
-                  pwd: uploadApiResponse.data.url,
-                });
-                // submit();
-              });
+              // uploadApi(file, progress).then((uploadApiResponse) => {
+              //   resolve({
+              //     code: 200,
+              //     pwd: uploadApiResponse.data.url,
+              //   });
+              //   // submit();
+              // });
             });
           },
         },
