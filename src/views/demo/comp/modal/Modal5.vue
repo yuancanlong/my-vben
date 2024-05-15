@@ -5,6 +5,7 @@
     :helpMessage="['提示1', '提示2']"
     width="1000px"
     @fullscreen="onFullscreen"
+    @ok="hanleOk"
   >
     <BasicTable @register="registerTable" ref="selectTable" />
   </BasicModal>
@@ -16,7 +17,7 @@
   import { getBasicColumns } from '../../table/tableData';
   import { demoListApi } from '@/api/demo/table';
 
-  const [registerTable] = useTable({
+  const [registerTable, { getSelectRows }] = useTable({
     canResize: true,
     title: 'useTable示例',
     titleHelpMessage: '使用useTable调用表格内方法',
@@ -42,5 +43,8 @@
   const onFullscreen = async () => {
     await nextTick();
     selectTable.value?.redoHeight();
+  };
+  const hanleOk = async () => {
+    console.log(getSelectRows(), '我是确认按钮');
   };
 </script>

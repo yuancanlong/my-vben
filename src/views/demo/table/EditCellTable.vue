@@ -6,6 +6,7 @@
       @edit-cancel="handleEditCancel"
       :beforeEditSubmit="beforeEditSubmit"
     />
+    <Modal5 @register="register5" />
   </div>
 </template>
 <script lang="ts" setup>
@@ -17,8 +18,13 @@
   import { treeOptionsListApi } from '@/api/demo/tree';
   import { useMessage } from '@/hooks/web/useMessage';
   import { Progress } from 'ant-design-vue';
+  import TestTable from './testTable.vue';
+  import Icon from './icon.vue';
+  import { useModal } from '@/components/Modal';
+  import Modal5 from '../comp/modal/Modal5.vue';
+  const [register5, { openModal: openModal5 }] = useModal();
 
-  const columns: BasicColumn[] = [
+  var columns: BasicColumn[] = [
     {
       title: '输入框',
       dataIndex: 'name',
@@ -59,17 +65,18 @@
       title: '数字输入框',
       dataIndex: 'id',
       edit: true,
-      editRule: true,
-      editComponent: 'InputNumber',
-      width: 200,
+      width: 300,
       editComponentProps: () => {
         return {
-          max: 100,
-          min: 0,
+          suffix: h(Icon, {}),
+          onclick: () => {
+            openModal5();
+          },
         };
       },
-      editRender: ({ text }) => {
-        return h(Progress, { percent: Number(text) });
+      editRender: ({ text, currentValue }) => {
+        // return h(Progress, { percent: Number(text) });
+        return h(TestTable, { percent: Number(text), form: getForm, getDataSource });
       },
     },
     {
@@ -211,7 +218,7 @@
     },
   ];
 
-  const [registerTable] = useTable({
+  const [registerTable, { getForm, getDataSource, getSelectRows }] = useTable({
     title: '可编辑单元格示例',
     api: demoListApi,
     columns: columns,
