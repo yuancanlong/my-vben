@@ -6,11 +6,11 @@
       @edit-cancel="handleEditCancel"
       :beforeEditSubmit="beforeEditSubmit"
     />
-    <Modal5 @register="register5" />
+    <Modal5 @register="register5" :selectData="data" />
   </div>
 </template>
 <script lang="ts" setup>
-  import { h } from 'vue';
+  import { h, onMounted, ref } from 'vue';
   import { BasicTable, useTable, BasicColumn } from '@/components/Table';
   import { optionsListApi } from '@/api/demo/select';
 
@@ -265,6 +265,11 @@
     console.log('单元格数据正在准备提交', { record, index, key, value });
     return await feakSave({ id: record.id, key, value });
   }
+  const data = ref();
+  onMounted(async () => {
+    const res = await demoListApi({ page: 1, pageSize: 10 });
+    data.value = res.items.map((item) => item.id);
+  });
 
   function handleEditCancel() {
     console.log('cancel');
