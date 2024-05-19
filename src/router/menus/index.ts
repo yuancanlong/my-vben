@@ -9,16 +9,33 @@ import { isHttpUrl } from '@/utils/is';
 import { router } from '@/router';
 import { PermissionModeEnum } from '@/enums/appEnum';
 import { pathToRegexp } from 'path-to-regexp';
+import data from '../data';
+import { LAYOUT } from '@/router/constant';
 
 const modules = import.meta.glob('../routes/modules/**/*.ts', { eager: true });
 
-const menuModules: MenuModule[] = [];
+let menuModules: MenuModule[] = [];
 
 Object.keys(modules).forEach((key) => {
   const mod = (modules as Recordable)[key].default || {};
   const modList = Array.isArray(mod) ? [...mod] : [mod];
   menuModules.push(...modList);
 });
+const newData = (item?: any) => {
+  return item.map((v) => {
+    return {
+      children: v.moduleUrl?.includes(['list']) ? [] : newData(v.children),
+      component: v.moduleUrl?.includes(['list'])
+        ? () => import('@/views/demo/comp/button/index.vue')
+        : LAYOUT,
+      meta: { title: v.moduleName },
+      name: v.moduleUrl ? v.moduleUrl : v.moduleFlag,
+      path: '/' + v.moduleFlag,
+      // redirect: v.moduleUrl || '/',
+    };
+  });
+};
+// menuModules = [...newData(data)];
 
 // ===========================
 // ==========Helper===========
@@ -74,10 +91,10 @@ async function getAsyncMenus() {
 
 export const getMenus = async (): Promise<Menu[]> => {
   const menus = await getAsyncMenus();
-  if (isRoleMode()) {
-    const routes = router.getRoutes();
-    return filter(menus, basicFilter(routes));
-  }
+  // if (isRoleMode()) {
+  //   const routes = router.getRoutes();
+  //   return filter(menus, basicFilter(routes));
+  // }
   return menus;
 };
 
