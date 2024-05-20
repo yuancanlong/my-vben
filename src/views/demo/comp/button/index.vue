@@ -10,7 +10,7 @@
           <div class="my-2">
             <h3>success</h3>
             <div class="py-2">
-              <a-button color="success"> 成功 </a-button>
+              <a-button color="success" @click="hanle" @onclick="hanle"> 成功 </a-button>
               <a-button color="success" class="ml-2" disabled> 禁用 </a-button>
               <a-button color="success" class="ml-2" loading> loading </a-button>
               <a-button color="success" type="link" class="ml-2"> link </a-button>
@@ -105,4 +105,87 @@
 <script lang="ts" setup>
   import { PageWrapper } from '@/components/Page';
   import { Card, Row, Col } from 'ant-design-vue';
+  import { router, resetRouter } from '@/router';
+  import { useMultipleTabStore } from '@/store/modules/multipleTab';
+  import { RouteRecordRaw } from 'vue-router';
+  import data from '@/router/data';
+  import { LAYOUT } from '@/router/constant';
+  import { transformRouteToMenu } from '@/router/helper/menuHelper';
+  import { flatMultiLevelRoutes } from '@/router/helper/routeHelper';
+  import { usePermissionStore } from '@/store/modules/permission';
+  import { asyncRoutes } from '@/router/routes';
+  import { useBtnRights } from '@/router/routes/useBtnRights';
+  import data1 from '@/router/routes/data1';
+
+  const permissionStore = usePermissionStore();
+  const hanle = async () => {
+    // 清空tabs
+    const tabStore = useMultipleTabStore();
+    tabStore.clearCacheTabs();
+    // 初始化路由
+    // resetRouter();
+    // // menus api
+    // const newMenuData = (item?: any) => {
+    //   return item.map((v) => {
+    //     return {
+    //       children: v.moduleUrl?.includes(['list']) ? [] : newMenuData(v.children),
+    //       component: v.moduleUrl?.includes(['list'])
+    //         ? () => import('@/views/demo/comp/card-list/index.vue')
+    //         : LAYOUT,
+    //       meta: { title: v.moduleName },
+    //       name: v.moduleUrl ? v.moduleUrl : v.moduleFlag,
+    //       path: '/' + v.moduleFlag,
+    //       // redirect: v.moduleUrl || '/',
+    //     };
+    //   });
+    // };
+    // // 转换成我们需要的 menus
+    // let newMenuList = newMenuData(data);
+    // // 将路由转换成菜单
+    // const menuList = transformRouteToMenu(newMenuList, true);
+    // //菜单赋值
+    // permissionStore.setFrontMenuList(menuList);
+    // //刷新菜单
+    // permissionStore.setLastBuildMenuTime();
+
+    // // menus转换成我们需要的routers
+    // const routers = flatMultiLevelRoutes(asyncRoutes);
+    // // 将router 数据添加进 路由
+    // routers.forEach((route) => {
+    //   router.addRoute(route as unknown as RouteRecordRaw);
+    // });
+
+    // 根据权限刷新菜单
+    let arr: any = [];
+    asyncRoutes.forEach((i) => {
+      data1.forEach((v) => {
+        if (i.name === v.id) {
+          arr.push(v);
+        }
+      });
+    });
+    const newMenuData = (item?: any) => {
+      return item.map((v) => {
+        return {
+          children: v.moduleUrl?.includes(['list']) ? [] : newMenuData(v.children),
+          component: v.moduleUrl?.includes(['list'])
+            ? () => import('@/views/demo/comp/card-list/index.vue')
+            : LAYOUT,
+          meta: { title: v.moduleName },
+          name: v.moduleUrl ? v.moduleUrl : v.moduleFlag,
+          path: '/' + v.moduleFlag,
+          // redirect: v.moduleUrl || '/',
+        };
+      });
+    };
+    // // 转换成我们需要的 menus
+    let newMenuList = newMenuData(arr);
+    const menuList = transformRouteToMenu(newMenuList, true);
+    //菜单赋值
+    permissionStore.setFrontMenuList(menuList);
+    //刷新菜单
+    permissionStore.setLastBuildMenuTime();
+  };
+
+  useBtnRights('wss-virtual-store-list');
 </script>

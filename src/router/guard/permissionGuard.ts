@@ -81,7 +81,7 @@ export function createPermissionGuard(router: Router) {
       }
     }
 
-    // 动态路由加载（首次）
+    // 动态路由加载（首次）todo
     if (!permissionStore.getIsDynamicAddedRoute) {
       const routes = await permissionStore.buildRoutesAction();
       [...routes, PAGE_NOT_FOUND_ROUTE].forEach((route) => {
@@ -89,7 +89,6 @@ export function createPermissionGuard(router: Router) {
       });
       // 记录动态路由加载完成
       permissionStore.setDynamicAddedRoute(true);
-
       // 现在的to动态路由加载之前的，可能为PAGE_NOT_FOUND_ROUTE（例如，登陆后，刷新的时候）
       // 此处应当重定向到fullPath，否则会加载404页面内容
       next({ path: to.fullPath, replace: true, query: to.query });

@@ -111,7 +111,7 @@ export const useUserStore = defineStore({
       } else {
         const permissionStore = usePermissionStore();
 
-        // 动态路由加载（首次）
+        // 动态路由加载（首次）todo
         if (!permissionStore.isDynamicAddedRoute) {
           const routes = await permissionStore.buildRoutesAction();
           [...routes, PAGE_NOT_FOUND_ROUTE].forEach((route) => {

@@ -18,53 +18,24 @@ Object.keys(modules).forEach((key) => {
   const modList = Array.isArray(mod) ? [...mod] : [mod];
   routeModuleList.push(...modList);
 });
+// const newData = (item?: any) => {
+//   return item.map((v) => {
+//     return {
+//       children: newData(v.children),
+//       component: v.moduleUrl?.includes(['list'])
+//         ? () => import('@/views/demo/comp/button/index.vue')
+//         : LAYOUT,
+//       meta: { title: v.moduleName, hideMenu: v.moduleFlag.includes(':') },
+//       name: v.moduleFlag,
+//       path: '/' + v.moduleFlag,
 
-const newData = (item?: any) => {
-  return item.map((v) => {
-    return {
-      children: newData(v.children),
-      component: v.moduleUrl?.includes(['list'])
-        ? () => import('@/views/demo/comp/button/index.vue')
-        : LAYOUT,
-      meta: { title: v.moduleName },
-      name: v.moduleFlag,
-      path: '/' + v.moduleFlag,
-      // redirect: v.moduleUrl || '/',
-    };
-  });
-};
-const home = {
-  path: '/dashboard',
-  name: 'Dashboard',
-  component: LAYOUT,
-  redirect: '/dashboard/analysis',
-  meta: {
-    orderNo: 10,
-    icon: 'ion:grid-outline',
-    title: t('routes.dashboard.dashboard'),
-  },
-  children: [
-    {
-      path: 'analysis',
-      name: 'Analysis',
-      component: () => import('@/views/dashboard/analysis/index.vue'),
-      meta: {
-        // affix: true,
-        title: t('routes.dashboard.analysis'),
-      },
-    },
-    {
-      path: 'workbench',
-      name: 'Workbench',
-      component: () => import('@/views/dashboard/workbench/index.vue'),
-      meta: {
-        title: t('routes.dashboard.workbench'),
-      },
-    },
-  ],
-};
+//       // redirect: v.moduleUrl || '/',
+//     };
+//   });
+// };
+
 export const asyncRoutes = [PAGE_NOT_FOUND_ROUTE, ...routeModuleList];
-// export const asyncRoutes = [PAGE_NOT_FOUND_ROUTE, home, ...newData(data)];
+// export const asyncRoutes = [PAGE_NOT_FOUND_ROUTE, ...newData(data)];
 
 // 根路由
 export const RootRoute: AppRouteRecordRaw = {

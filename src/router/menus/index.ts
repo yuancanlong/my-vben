@@ -21,20 +21,22 @@ Object.keys(modules).forEach((key) => {
   const modList = Array.isArray(mod) ? [...mod] : [mod];
   menuModules.push(...modList);
 });
-const newData = (item?: any) => {
-  return item.map((v) => {
-    return {
-      children: v.moduleUrl?.includes(['list']) ? [] : newData(v.children),
-      component: v.moduleUrl?.includes(['list'])
-        ? () => import('@/views/demo/comp/button/index.vue')
-        : LAYOUT,
-      meta: { title: v.moduleName },
-      name: v.moduleUrl ? v.moduleUrl : v.moduleFlag,
-      path: '/' + v.moduleFlag,
-      // redirect: v.moduleUrl || '/',
-    };
-  });
-};
+// const newData = (item?: any) => {
+//   return item.map((v) => {
+//     return {
+//       children: v.moduleUrl?.includes(['list']) ? [] : newData(v.children),
+//       component: v.moduleUrl?.includes(['list'])
+//         ? () => import('@/views/demo/comp/card-list/index.vue')
+//         : LAYOUT,
+//       meta: { title: v.moduleName },
+//       name: v.moduleUrl ? v.moduleUrl : v.moduleFlag,
+//       path: '/' + v.moduleFlag,
+//       // redirect: v.moduleUrl || '/',
+//     };
+//   });
+// };
+
+// console.log(newData(data), 'newData(data)');
 // menuModules = [...newData(data)];
 
 // ===========================
